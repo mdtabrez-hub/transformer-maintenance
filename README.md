@@ -1,6 +1,6 @@
 # Physics-informed digital twin for transformer predictive maintenance
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24547691.svg)](https://doi.org/10.5281/zenodo.24547691)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24547690.svg)](https://doi.org/10.5281/zenodo.24547690)
 
 Simulation code, seeds, generated datasets, trained model weights, result files
 and figure scripts supporting:
@@ -173,9 +173,8 @@ m.eval()
 
 ## How to cite
 
-> M. Tabrez, O. Singh, M. Aknan, P. Kumar, M. S. Hussain, and M. M. Haque, "transformer-maintenance: Simulation code and data for a physics-informed digital twin of substation transformers," Zenodo, ver. v1.1.0-R1, Nov. 2026, doi: 10.5281/zenodo.24547691.
+> M. Tabrez, O. Singh, M. Aknan, P. Kumar, M. S. Hussain, and M. M. Haque, "transformer-maintenance: Simulation code and data for a physics-informed digital twin of substation transformers," Zenodo, ver. v1.1.1-R1, Nov. 2026, doi: 10.5281/zenodo.24547690.
 
-DOI of this version: [10.5281/zenodo.24547691](https://doi.org/10.5281/zenodo.24547691).
 DOI of all versions (always resolves to the latest): [10.5281/zenodo.24547690](https://doi.org/10.5281/zenodo.24547690).
 
 ## Licence

@@ -11,6 +11,6 @@
     {"name": "Haque, Md Mazharul", "affiliation": "Darbhanga College of Engineering, Darbhanga, Bihar, India"}
   ],
   "license": "MIT",
-  "version": "v1.1.0-R1",
+  "version": "v1.1.1-R1",
   "keywords": ["physics-informed neural networks", "digital twin", "predictive maintenance", "power transformers", "IEC 60076-7", "Kalman filter", "knowledge distillation", "edge computing", "remaining useful life"]
 }

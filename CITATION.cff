@@ -1,12 +1,9 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 title: "transformer-maintenance: simulation code and data for a physics-informed digital twin of substation transformers"
-version: "1.1.0-R1"
-doi: "10.5281/zenodo.24547691"
+version: "1.1.1-R1"
+doi: "10.5281/zenodo.24547690"
 identifiers:
-  - type: doi
-    value: "10.5281/zenodo.24547691"
-    description: "This version (v1.1.0-R1)"
   - type: doi
     value: "10.5281/zenodo.24547690"
     description: "All versions"
