@@ -1,0 +1,47 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "transformer-maintenance: simulation code and data for a physics-informed digital twin of substation transformers"
+version: "1.1.0-R1"
+date-released: "2026-11-26"
+abstract: >-
+  Simulation framework for a physics-informed digital twin of a three-phase
+  substation transformer: IEC 60076-7 thermal modeling, PINN hot-spot
+  estimation benchmarked against Kalman-filter and gray-box estimators,
+  knowledge-distilled edge inference with repeated cross-validation, and
+  remaining-useful-life estimation. Revision R1 of IEEE Access manuscript
+  Access-2026-53764.
+authors:
+  - family-names: Tabrez
+    given-names: Md
+    affiliation: "Motihari College of Engineering, Bihar Engineering University"
+    orcid: "https://orcid.org/0000-0002-0829-1258"
+    email: tabrez.1988@gov.in
+license: MIT
+repository-code: "https://github.com/mdtabrez-hub/transformer-maintenance"
+keywords:
+  - physics-informed neural networks
+  - digital twin
+  - predictive maintenance
+  - edge computing
+  - knowledge distillation
+  - power transformers
+  - IEC 60076-7
+preferred-citation:
+  type: article
+  title: "Physics-Informed Digital Twin With Distilled Edge Inference for Predictive Maintenance of Substation Transformers: A Model-Based Validation"
+  authors:
+    - family-names: Tabrez
+      given-names: Md
+    - family-names: Singh
+      given-names: Onkar
+    - family-names: Aknan
+      given-names: Mohammad
+    - family-names: Kumar
+      given-names: Pritam
+    - family-names: Hussain
+      given-names: Md Shadab
+    - family-names: Haque
+      given-names: Md Mazharul
+  journal: "IEEE Access"
+  year: 2026
+  notes: "Manuscript Access-2026-53764, under review"

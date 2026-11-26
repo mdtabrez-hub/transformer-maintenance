@@ -1,0 +1,44 @@
+[
+ {
+  "n_phases": 3,
+  "seed": 0,
+  "lam_couple": 0.0,
+  "rmse": 1.775269428476006,
+  "imbalance_rmse": 0.6681973945171005
+ },
+ {
+  "n_phases": 3,
+  "seed": 0,
+  "lam_couple": 1.0,
+  "rmse": 1.7678765724897976,
+  "imbalance_rmse": 0.64826469962711
+ },
+ {
+  "n_phases": 3,
+  "seed": 1,
+  "lam_couple": 0.0,
+  "rmse": 1.7628113527671405,
+  "imbalance_rmse": 0.7699196534481196
+ },
+ {
+  "n_phases": 3,
+  "seed": 1,
+  "lam_couple": 1.0,
+  "rmse": 1.7536450113608593,
+  "imbalance_rmse": 0.7477580414344378
+ },
+ {
+  "n_phases": 3,
+  "seed": 2,
+  "lam_couple": 0.0,
+  "rmse": 1.8672439469302744,
+  "imbalance_rmse": 0.836204181892603
+ },
+ {
+  "n_phases": 3,
+  "seed": 2,
+  "lam_couple": 1.0,
+  "rmse": 1.8563041108211826,
+  "imbalance_rmse": 0.8110926592169658
+ }
+]

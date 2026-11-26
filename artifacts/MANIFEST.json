@@ -1,0 +1,51 @@
+{
+ "seed": 20260905,
+ "generated_utc": "2026-10-19T05:18:55Z",
+ "python": "3.13.16",
+ "numpy": "2.5.3",
+ "torch": "2.14.1+cpu",
+ "runtime_s": 211.3,
+ "note": "All files are deterministic given the seed; re-running this script reproduces identical digests on the same library versions.",
+ "files": {
+  "datasets/classification_seq.npz": {
+   "bytes": 5062498,
+   "sha256": "8cc2980dd680391ea9b87102f6993bbbb8b1ae9859bfc5c2b520d9890d7ca4fb"
+  },
+  "datasets/pinn_trajectory.npz": {
+   "bytes": 81476,
+   "sha256": "ee07f54cd279db77dfe8e72a4402974789665d8ad83fa1b5507eae8dfc1e141e"
+  },
+  "weights/pinn.pt": {
+   "bytes": 78333,
+   "sha256": "44f87aaa921c3f4c7dc129f8fcc8992e7167d7e3d90563816389af344e950871"
+  },
+  "weights/rf_student.joblib": {
+   "bytes": 85973,
+   "sha256": "07e9adfda90cbf46e6223b29e6848eafbabfa5d0ad1208036100c8b9b410ee68"
+  },
+  "weights/rf_teacher.joblib": {
+   "bytes": 925565,
+   "sha256": "abf9c3a8da30a52022233bfbf3f2de76a4e734711d83b3fbe0448c9dc37a231f"
+  },
+  "weights/scaler.joblib": {
+   "bytes": 3231,
+   "sha256": "a42084a78c2cfef2545f48bc804417c49deef9faca3bc8717b3dd9350ee11d64"
+  },
+  "weights/student_gru_int8.pt": {
+   "bytes": 64523,
+   "sha256": "f120c5f7ce8a8f75467612a6abca1f65e1058b177f86c4f93d4ebfbc0a88b737"
+  },
+  "weights/student_gru_kd.pt": {
+   "bytes": 64431,
+   "sha256": "a8c36698f3f83c326b3948c9e81e8f8be70395519a1c84045ba0ab0a8770dee1"
+  },
+  "weights/teacher_gru.pt": {
+   "bytes": 511815,
+   "sha256": "209dbabb28c738f49812717bcbd8589df401bec343ebb8f0917494aa225c3287"
+  },
+  "weights/vae.pt": {
+   "bytes": 39337,
+   "sha256": "9851c41f641e56d873b94df1001e048101a6ac3a29b0e331c0e85714d6afcd3a"
+  }
+ }
+}

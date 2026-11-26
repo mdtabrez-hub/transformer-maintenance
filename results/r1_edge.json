@@ -1,0 +1,54 @@
+{
+ "feature_extraction": {
+  "median_ms": 13.865949499859198,
+  "p95_ms": 16.223050599887756
+ },
+ "preprocessing_total": {
+  "median_ms": 15.593981499932852,
+  "p95_ms": 16.72741354993832
+ },
+ "rf200_inference": {
+  "median_ms": 10.488795499895787,
+  "p95_ms": 15.37529355002789
+ },
+ "student_gru_inference": {
+  "median_ms": 0.5776760001481307,
+  "p95_ms": 0.8947151498659878
+ },
+ "student_rf50_inference": {
+  "median_ms": 3.16221250000126,
+  "p95_ms": 4.878566600177692
+ },
+ "student_ensemble_inference": {
+  "median_ms": 3.244021499995142,
+  "p95_ms": 4.852925849922941
+ },
+ "rf200_end_to_end": {
+  "median_ms": 22.551071499947284,
+  "p95_ms": 33.85646110009475
+ },
+ "student_end_to_end": {
+  "median_ms": 13.548954500038235,
+  "p95_ms": 22.307199049782866
+ },
+ "peak_heap_kB": {
+  "rf200": 14.946,
+  "student": 13.875,
+  "preprocessing": 64.55
+ },
+ "model": {
+  "rf200_nodes": 12254,
+  "rf200_size_kB": 147.048,
+  "rf200_comparisons": 1086.91452991453,
+  "rf50_nodes": 2692,
+  "rf50_size_kB": 32.304,
+  "rf50_comparisons": 263.55555555555554,
+  "student_gru_params": 15174,
+  "student_gru_int8_kB": 15.174,
+  "student_gru_mflop": 0.441728
+ },
+ "accuracy_split0": {
+  "rf200": 0.8803418803418803,
+  "student": 0.8803418803418803
+ }
+}

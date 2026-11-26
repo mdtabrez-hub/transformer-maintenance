@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+results/stage*.json
+results/noise/
+results/clf_cache.npz
+eqs/
+*.egg-info/
+.DS_Store
