@@ -1,0 +1,16 @@
+{
+  "title": "transformer-maintenance: Simulation code and data for a physics-informed digital twin of substation transformers",
+  "upload_type": "software",
+  "description": "<p>Simulation framework, generated datasets, trained model weights, result files and figure scripts supporting the IEEE Access manuscript Access-2026-53764, <em>Physics-Informed Digital Twin With Distilled Edge Inference for Predictive Maintenance of Substation Transformers: A Model-Based Validation</em> (first revision, R1).</p><p>Contents: IEC 60076-7 thermal simulation of a three-phase 20 MVA ONAF transformer; physics-informed neural network (PINN) hot-spot estimation benchmarked against an IEC difference-equation model, a Kalman/RTS smoother, a joint-parameter extended Kalman filter and an identified gray-box model under five structurally different ground-truth generators; local identifiability analysis; knowledge-distilled INT8 edge classifier with 2 x 5 repeated cross-validation, paired tests, cross-condition and cross-severity tests; remaining-useful-life estimators with sensitivity analysis; reconstruction-based integrity validation. All results are simulation results. Master seed 20260905; README_R1.md maps every table and figure to its script.</p>",
+  "creators": [
+    {"name": "Tabrez, Md", "affiliation": "Motihari College of Engineering, Motihari, Bihar, India", "orcid": "0000-0002-0829-1258"},
+    {"name": "Singh, Onkar", "affiliation": "Manipal University Jaipur, Jaipur, Rajasthan, India"},
+    {"name": "Aknan, Mohammad", "affiliation": "Motihari College of Engineering, Motihari, Bihar, India"},
+    {"name": "Kumar, Pritam", "affiliation": "Government Engineering College, Madhubani, Bihar, India"},
+    {"name": "Hussain, Md Shadab", "affiliation": "Government Engineering College, Madhubani, Bihar, India"},
+    {"name": "Haque, Md Mazharul", "affiliation": "Darbhanga College of Engineering, Darbhanga, Bihar, India"}
+  ],
+  "license": "MIT",
+  "version": "v1.1.0-R1",
+  "keywords": ["physics-informed neural networks", "digital twin", "predictive maintenance", "power transformers", "IEC 60076-7", "Kalman filter", "knowledge distillation", "edge computing", "remaining useful life"]
+}
