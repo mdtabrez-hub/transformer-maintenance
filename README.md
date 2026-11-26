@@ -2,16 +2,13 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24547691.svg)](https://doi.org/10.5281/zenodo.24547691)
 
-Simulation code, seeds, generated datasets, trained model weights and
-figure-generation scripts supporting:
+Simulation code, seeds, generated datasets, trained model weights, result files
+and figure scripts supporting:
 
 > Md Tabrez, Onkar Singh, Mohammad Aknan, Pritam Kumar, Md Shadab Hussain and Md Mazharul Haque,
 > "Physics-Informed Digital Twin With Distilled Edge Inference for Predictive
 > Maintenance of Substation Transformers: A Model-Based Validation,"
 > IEEE Access, manuscript Access-2026-53764 (under review).
-
-See `README_R1.md` for the experiments added in the first revision (R1);
-several of them supersede numbers in the table below.
 
 **This is a simulation study.** No physical sensors were installed and no field
 data were collected. Every number in the paper is produced by the code here from
@@ -23,43 +20,46 @@ the master seed `20260905`.
 
 | Result | Value |
 |---|---|
-| Hot-spot RMSE, PINN (λ_p = 10) | **1.31 ± 0.19 K** (R² = 0.984) |
-| Hot-spot RMSE, same network without physics residual | 13.72 ± 2.25 K (R² = −0.731) |
-| Hot-spot labels needed by PINN to reach 1.55 K | **0** |
-| Hot-spot labels needed by data-driven model to reach 1.89 K | 200 |
-| Incipient-fault accuracy, teacher / distilled student | 88.46 % / 88.03 % |
-| Physics-feature contribution | +6.35 pp (78.57 % → 84.92 %) |
-| Compression, teacher → INT8 student | 8.4× params, 10.5× stored size, −0.43 pp accuracy |
-| Upstream bandwidth reduction | 95.33 % |
-| RUL, physics-informed vs. Weibull baseline | 86.7 d vs. 283.3 d MAE (R² 0.666 vs. −2.844) |
+| Hot-spot RMSE, PINN (10 % parameter mismatch) | 1.72 K |
+| Hot-spot RMSE, same network without physics residual | 13.62 K |
+| Hot-spot RMSE, identified gray-box IEC model | **0.22 K** |
+| Hot-spot RMSE, joint-parameter extended Kalman filter | 0.35 K |
+| Fault classification, random forest / teacher ensemble (2 × 5 CV) | 89.0 % / 89.0 % |
+| Fault classification, distilled INT8 student | 86.6 % |
+| Upstream bandwidth reduction from edge feature extraction | 95.3 % |
 
-Negative results are reported alongside these: a compact random forest matches
-the recurrent ensemble; the explicit inter-phase coupling term is nearly
-redundant (−2.8 % imbalance RMSE); and the autoencoder integrity validator
-detects gross spoofing (97.4 %) but cannot detect replay of valid data (12.0 %),
-which is structural rather than a tuning deficiency.
+Conventional estimators that use the same model and inputs beat the PINN, and
+the gray-box model leads under four of five structurally different ground-truth
+models. Top-oil data cannot observe the hot-spot gradient (see the
+identifiability analysis). Distillation gives no significant gain, physics-derived
+features do not raise accuracy, and all classifiers degrade sharply under shifted
+operating conditions. The reconstruction-based validator detects gross spoofing
+but not replay.
 
 ---
 
 ## Layout
 
 ```
-code/           simulation framework and manuscript build scripts
-  sim/core.py           IEC 60076-7 thermal model, sensor synthesis, fault
-                        mechanisms, feature extraction, fleet degradation
-  sim/models.py         PINN, GRU/CNN-LSTM, distillation, VAE, RUL estimators
-  sim/experiments.py    experiments E1-E13
-  run_all.py            staged orchestrator
-  export_artifacts.py   regenerates datasets and trained weights
-  make_figures.py       all 16 figures
-  make_fig06.py         Fig. 6 at 600 dpi
-  make_equations.py     31 numbered equations
-  make_manuscript.py    manuscript content -> manuscript.json
-  build_docx.js         manuscript.json -> IEEE two-column .docx
+code/
+  sim/core.py                 IEC 60076-7 thermal model, sensor synthesis, fault
+                              mechanisms, feature extraction, fleet degradation
+  sim/models.py               PINN, GRU/CNN-LSTM, distillation, VAE, RUL estimators
+  sim/experiments.py          base experiments E1-E13
+  sim/r1_thermal.py           ground-truth generators S1-S5; Kalman, EKF and
+                              gray-box estimators; identifiability
+  sim/r1_clf.py               repeated cross-validation and shift tests
+  run_all.py                  staged orchestrator for the base experiments
+  run_r1_*.py                 thermal benchmark, multiphase, classification,
+                              edge, RUL and identifiability experiments
+  analyse_r1_cv.py            cross-validation statistics and paired tests
+  make_tables_r1.py           all table numbers -> results/r1_numbers.json
+  make_figures.py             figures
+  make_figures_r1.py          Figs. 6 and 14
+  export_artifacts.py         regenerates datasets and trained weights
 artifacts/      generated datasets and trained weights, with MANIFEST.json
-figures/        16 figures, PNG (400-600 dpi) and PDF
-results/        results.json — every computed number in the paper
-paper/          summary of changes from the earlier draft
+figures/        figures, PNG and PDF
+results/        result files for every number in the paper
 ```
 
 ## Install
@@ -69,14 +69,51 @@ pip install -r requirements.txt
 pip install torch --index-url https://download.pytorch.org/whl/cpu   # CPU build
 ```
 
-## Reproduce
+Python 3.12, PyTorch 2.15.0+cpu, NumPy 2.x, SciPy, scikit-learn, pandas,
+matplotlib, networkx.
 
-Stages exist because a full run exceeds typical single-process time limits;
-`--stage all` runs everything in one go.
+## Which script produces which result
+
+| Script | Paper item | Output |
+|---|---|---|
+| `run_r1_thermal.py --workers 2` | Tables VII-VIII, Fig. 6(a)-(b), one-at-a-time mismatch | `results/r1_thermal.jsonl` |
+| `run_r1_multiphase.py` | Fig. 6(c), three-phase coupling | `results/r1_multiphase.json` |
+| `run_r1_identifiability.py` | Table IX | `results/ident.json` |
+| `run_r1_clf.py --stage cv` | Table X, Fig. 14(a)-(b), paired tests | `results/r1_clf_cv.json` |
+| `run_r1_clf.py --stage size` | Fig. 14(c) | `results/r1_clf_size.json` |
+| `run_r1_clf.py --stage sev` | cross-severity test (Section VI-C) | `results/r1_clf_sev.json` |
+| `run_r1_clf.py --stage shift` | Table XI, mixed faults | `results/r1_clf_shift.json` |
+| `run_r1_edge.py` | Table XII, host pipeline timing | `results/r1_edge.json` |
+| `run_r1_rul.py` | Tables XIII-XIV | `results/r1_rul.json` |
+| `analyse_r1_cv.py` | Table X statistics, severity terciles | `results/cv_summary.json` |
+| `make_tables_r1.py` | numbers of Tables VII-XIV | `results/r1_numbers.json` |
+| `make_figures_r1.py` | Figs. 6 and 14 | `figures/` |
+| `run_all.py` + `make_figures.py` | remaining tables and figures | `results/results.json`, `figures/` |
+
+## Reproduce
 
 ```bash
 cd code
-python3 run_all.py --stage A1    # PINN hot-spot reconstruction, 3 seeds
+python3 run_r1_thermal.py --workers 2      # ~1.5 h on 2 CPU cores (resumable)
+python3 run_r1_multiphase.py
+python3 run_r1_clf.py --stage cv            # then --stage size, sev, shift
+python3 run_r1_rul.py
+python3 run_r1_edge.py                      # host timings will differ on your machine
+python3 run_r1_identifiability.py
+python3 analyse_r1_cv.py
+python3 make_tables_r1.py
+python3 make_figures_r1.py ../figures
+```
+
+All result files from the authors' run are already in `results/`, so the last
+four commands can be run on their own to regenerate the tables and figures.
+
+The base experiments run in stages because a full run exceeds typical
+single-process time limits (`--stage all` runs everything; `--quick` is a
+reduced-budget smoke test):
+
+```bash
+python3 run_all.py --stage A1    # PINN hot-spot reconstruction
 python3 run_all.py --stage A2    # physics-loss weight ablation
 python3 run_all.py --stage A3    # label-efficiency sweep
 python3 run_all.py --stage A4    # inter-phase coupling ablation
@@ -85,19 +122,17 @@ python3 run_all.py --stage B2    # physics-feature ablation
 python3 run_all.py --stage C1    # sensor-noise sensitivity
 python3 run_all.py --stage C2    # remaining useful life
 python3 run_all.py --stage merge --out results/results.json
-```
-
-Add `--quick` for a reduced-budget smoke test. Generated feature datasets are
-cached as `.npz`; delete them to regenerate from scratch.
-
-Figures and manuscript:
-
-```bash
-python3 make_equations.py
 python3 make_figures.py
-python3 make_manuscript.py
-node build_docx.js manuscript.json manuscript.docx
 ```
+
+## Seeds
+
+Master seed `20260905` (`sim/core.py`). PINN runs use trajectory seed 100+s,
+training seed s and parameter-mismatch seed s+991 for s = 0..4.
+Cross-validation uses `StratifiedKFold(random_state=20260905+rep)` for rep = 0, 1,
+an inner validation split with `random_state=20260905+10*rep+fold`, and training
+seed `5*rep+fold`. Shifted test sets use seeds 20260905+500+i (conditions) and
+20260905+700+i (mixed faults).
 
 ## Artifacts
 
@@ -123,19 +158,25 @@ m.load_state_dict(ck["state_dict"])
 m.eval()
 ```
 
-## Reproducibility notes
+## Notes
 
-Results are deterministic given the seed and the library versions recorded in
-`results/results.json` (`meta`) and `artifacts/MANIFEST.json`. Two caveats a
-reader should know:
+- The classification dataset was generated with SNR 8 dB, severity range
+  [0.03, 0.32] and calibration errors of 12 % / 8 % (the `SimConfig` defaults).
+  The metadata in `results/results.json` records 12 dB / [0.05, 0.45] / 8 % / 5 %
+  because that stage reused a cached dataset; the defaults are the values that
+  produced the data.
+- `exp_pinn_multiphase` in `sim/experiments.py` uses `n_phases = 6`; the
+  three-phase result in the paper comes from `run_r1_multiphase.py`.
+- Embedded latency figures are analytical projections from measured FLOP counts
+  and an assumed sustained throughput, not hardware measurements. Host latency
+  is measured.
 
-- **PINN results average three seeds; classification results use a single seed
-  on one fixed split.** Differences below roughly one percentage point between
-  the closest classifier variants are within run-to-run variance, and no
-  significance testing is reported.
-- **Embedded latency figures in the paper are analytical projections**, derived
-  from measured FLOP counts and an assumed sustained throughput. They are not
-  hardware measurements. Host latency is measured.
+## How to cite
+
+> M. Tabrez, O. Singh, M. Aknan, P. Kumar, M. S. Hussain, and M. M. Haque, "transformer-maintenance: Simulation code and data for a physics-informed digital twin of substation transformers," Zenodo, ver. v1.1.0-R1, Nov. 2026, doi: 10.5281/zenodo.24547691.
+
+DOI of this version: [10.5281/zenodo.24547691](https://doi.org/10.5281/zenodo.24547691).
+DOI of all versions (always resolves to the latest): [10.5281/zenodo.24547690](https://doi.org/10.5281/zenodo.24547690).
 
 ## Licence
 
@@ -143,15 +184,5 @@ MIT — see `LICENSE`.
 
 ## Contact
 
-Md Tabrez · Motihari College of Engineering, Bihar Engineering University
+Md Tabrez · Motihari College of Engineering, Bihar Engineering University ·
 ORCID [0000-0002-0829-1258](https://orcid.org/0000-0002-0829-1258)
-
-
-## How to cite
-
-Software (this repository, archived on Zenodo):
-
-> M. Tabrez, O. Singh, M. Aknan, P. Kumar, M. S. Hussain, and M. M. Haque, "transformer-maintenance: Simulation code and data for a physics-informed digital twin of substation transformers," Zenodo, ver. v1.1.0-R1, Nov. 2026, doi: 10.5281/zenodo.24547691.
-
-DOI of this version: [10.5281/zenodo.24547691](https://doi.org/10.5281/zenodo.24547691).
-DOI of all versions (always resolves to the latest): [10.5281/zenodo.24547690](https://doi.org/10.5281/zenodo.24547690).
